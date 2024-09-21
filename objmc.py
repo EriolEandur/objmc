@@ -741,7 +741,7 @@ def objmc(
                 out.putpixel((p % x, y + math.floor(p / x)), a[j])
 
     print("Saving files...\033[K", end="\r")
-    out.save(output[1].split("/")[-1])
+    out.save(output[1])
     out.close()
     print(col.green + "Complete\033[K" + col.end)
 
