@@ -65,7 +65,7 @@ for line in lines:
                     runList.append('--flipuv')
                 
                 # Aufrufen des Python-Skripts 'process' mit den Parametern
-                print(f"Running process script with {filename}, {texture}, {output_model}, {output_texture}")
+                print(f"Running process script with {runlist}")
 
                 try:
                     result = subprocess.run(runList, check=True,
