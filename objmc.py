@@ -212,6 +212,7 @@ def getargs(args):
     compression = args.compression
 
 getargs(parser.parse_args())
+print("objmc start!")
 
 class col:
     head = "\033[95m"
