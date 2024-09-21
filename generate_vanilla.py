@@ -33,7 +33,8 @@ for line in lines:
             output_model = meta_data.get('output_model', None)
             output_texture = meta_data.get('output_texture', None)
             offset = meta_data.get('offset','0.0 0.0 0.0').split()
-			
+            print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
+            
             # Anpassung des Wertes für 'output_model'
             if texture:
                 texture = "sodium/assets/" + texture.replace(":", "/textures/")+".png"
