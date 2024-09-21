@@ -1,6 +1,7 @@
 import yaml
 import subprocess
 import os
+import PIL
 
 # Datei mit den geänderten Dateien
 changed_files_path = 'changed_files.txt'
