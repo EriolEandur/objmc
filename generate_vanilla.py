@@ -71,8 +71,8 @@ for line in lines:
             # Ausgabe der Ergebnisse (optional)
             print(f"Processing {filename}: ")
             print(f"  Texture: {texture}" )
-            print(f"  Output Model: {output_model} "+os.path.isfile(output_model))
-            print(f"  Output Texture: {output_texture} "+os.path.isfile(output_texture))
+            print(f"  Output Model: {output_model} ",os.path.isfile(output_model))
+            print(f"  Output Texture: {output_texture} ",os.path.isfile(output_texture))
             print()  # Leerzeile zur besseren Lesbarkeit
 
         except FileNotFoundError:
