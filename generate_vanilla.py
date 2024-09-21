@@ -57,8 +57,13 @@ for line in lines:
                 try:
                     subprocess.run(
                         ['python3', 'objmc.py', '--objs', filename, '--texs', texture, '--out', output_model, output_texture],
-                        check=True)
-                except subprocess.CalledProcessError as e:
+                        check=True,
+                        stdout=subprocess.PIPE,   # Umleitung der normalen Ausgabe
+                        stderr=subprocess.PIPE    # Umleitung der Fehlerausgabe)
+                    # Ausgabe von stdout und stderr
+                    print("Standard Output:\n", result.stdout.decode())
+                    print("Standard Error:\n", result.stderr.decode())               
+	        except subprocess.CalledProcessError as e:
                     print(f"Error running process script: {e}")
 
             else:
