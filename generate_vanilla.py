@@ -34,7 +34,11 @@ for line in lines:
             output_texture = meta_data.get('output_texture', None)
             offset = meta_data.get('offset','0.0 0.0 0.0').split()
             print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
-            
+            offset = meta_data.get('offset','0.0 0.0 0.0').split()
+            print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
+            options = meta_data.get('options', [])
+            visibility = meta_data.get('visibility', 7)
+           
             # Anpassung des Wertes für 'output_model'
             if texture:
                 texture = "sodium/assets/" + texture.replace(":", "/textures/")+".png"
@@ -54,13 +58,17 @@ for line in lines:
                 if output_texture_dir:
                     os.makedirs(output_texture_dir, exist_ok=True)
 
-               # Aufrufen des Python-Skripts 'process' mit den Parametern
+                runList = ['python3', 'objmc.py', '--objs', filename, '--texs', texture, '--offset', offset[0], offset[1], offset[2],  '--out', output_model, output_texture, '--visibility', str(visibility)]
+                if 'noshadow' in options:
+                    runList.append('--noshadow')
+                if 'flipuv' in options:
+                    runList.append('--flipuv')
+                
+                # Aufrufen des Python-Skripts 'process' mit den Parametern
                 print(f"Running process script with {filename}, {texture}, {output_model}, {output_texture}")
 
                 try:
-                    result = subprocess.run(
-                        ['python3', 'objmc/objmc.py', '--objs', filename, '--texs', texture, '--offset', offset[0], offset[1], offset[2], '--out', output_model, output_texture],
-                        check=True,
+                    result = subprocess.run(runList, check=True,
                         stdout=subprocess.PIPE,   # Umleitung der normalen Ausgabe
                         stderr=subprocess.PIPE)    # Umleitung der Fehlerausgabe
                 except subprocess.CalledProcessError as e:
