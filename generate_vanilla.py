@@ -63,7 +63,7 @@ for line in lines:
                     # Ausgabe von stdout und stderr
                     print("Standard Output:\n", result.stdout.decode())
                     print("Standard Error:\n", result.stderr.decode())               
-	        except subprocess.CalledProcessError as e:
+                except subprocess.CalledProcessError as e:
                     print(f"Error running process script: {e}")
 
             else:
