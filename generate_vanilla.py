@@ -32,6 +32,7 @@ for line in lines:
             texture = meta_data.get('texture', None)
             output_model = meta_data.get('output_model', None)
             output_texture = meta_data.get('output_texture', None)
+            offset = meta_data.get('offset','0.0 0.0 0.0').split()
 			
             # Anpassung des Wertes für 'output_model'
             if texture:
@@ -57,7 +58,7 @@ for line in lines:
 
                 try:
                     result = subprocess.run(
-                        ['python3', 'objmc/objmc.py', '--objs', filename, '--texs', texture, '--out', output_model, output_texture],
+                        ['python3', 'objmc/objmc.py', '--objs', filename, '--texs', texture, '--offset', offset[0], offset[1], offset[2], '--out', output_model, output_texture],
                         check=True,
                         stdout=subprocess.PIPE,   # Umleitung der normalen Ausgabe
                         stderr=subprocess.PIPE)    # Umleitung der Fehlerausgabe
