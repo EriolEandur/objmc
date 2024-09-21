@@ -58,7 +58,7 @@ for line in lines:
                 if output_texture_dir:
                     os.makedirs(output_texture_dir, exist_ok=True)
 
-                runList = ['python3', 'objmc.py', '--objs', filename, '--texs', texture, '--offset', offset[0], offset[1], offset[2],  '--out', output_model, output_texture, '--visibility', str(visibility)]
+                runList = ['python3', 'objmc/objmc.py', '--objs', filename, '--texs', texture, '--offset', offset[0], offset[1], offset[2],  '--out', output_model, output_texture, '--visibility', str(visibility)]
                 if 'noshadow' in options:
                     runList.append('--noshadow')
                 if 'flipuv' in options:
