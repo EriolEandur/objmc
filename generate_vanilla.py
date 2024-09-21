@@ -5,6 +5,9 @@ import os
 # Datei mit den geänderten Dateien
 changed_files_path = 'changed_files.txt'
 
+print("Generating vanilla files!)
+print(f"Processing changed files from: {changed_files_path}")
+      
 # Öffnen der Datei 'changed_files.txt' und Einlesen der Zeilen
 with open(changed_files_path, 'r') as file:
     lines = file.readlines()
