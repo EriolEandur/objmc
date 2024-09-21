@@ -56,7 +56,7 @@ for line in lines:
 
                 try:
                     result = subprocess.run(
-                        ['python3', 'objmc.py', '--objs', filename, '--texs', texture, '--out', output_model, output_texture],
+                        ['python3', 'objmc/objmc.py', '--objs', filename, '--texs', texture, '--out', output_model, output_texture],
                         check=True,
                         stdout=subprocess.PIPE,   # Umleitung der normalen Ausgabe
                         stderr=subprocess.PIPE)    # Umleitung der Fehlerausgabe
