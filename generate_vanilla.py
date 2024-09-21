@@ -34,8 +34,6 @@ for line in lines:
             output_texture = meta_data.get('output_texture', None)
             offset = meta_data.get('offset','0.0 0.0 0.0').split()
             print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
-            offset = meta_data.get('offset','0.0 0.0 0.0').split()
-            print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
             options = meta_data.get('options', [])
             visibility = meta_data.get('visibility', 7)
            
@@ -65,7 +63,7 @@ for line in lines:
                     runList.append('--flipuv')
                 
                 # Aufrufen des Python-Skripts 'process' mit den Parametern
-                print(f"Running process script with {runlist}")
+                print(f"Running process script with {runList}")
 
                 try:
                     result = subprocess.run(runList, check=True,
