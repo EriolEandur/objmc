@@ -59,7 +59,7 @@ for line in lines:
                         ['python3', 'objmc.py', '--objs', filename, '--texs', texture, '--out', output_model, output_texture],
                         check=True,
                         stdout=subprocess.PIPE,   # Umleitung der normalen Ausgabe
-                        stderr=subprocess.PIPE    # Umleitung der Fehlerausgabe)
+                        stderr=subprocess.PIPE)    # Umleitung der Fehlerausgabe
                     # Ausgabe von stdout und stderr
                     print("Standard Output:\n", result.stdout.decode())
                     print("Standard Error:\n", result.stderr.decode())               
