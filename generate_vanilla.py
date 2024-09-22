@@ -36,7 +36,21 @@ for line in lines:
             print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
             options = meta_data.get('options', [])
             visibility = meta_data.get('visibility', 7)
-           
+
+            if not texture:
+                with open('deine_datei.txt', 'r') as file:
+                    for line in file:
+                    # Überprüfen, ob die Zeile mit 'map_kd' beginnt
+                    if line.startswith(filename.replace('.obj','.mtl'):
+                    texture = line.split()[1].strip()
+                    break  
+
+            if not output_model:
+                output_model = filename.replace('.obj', '.json'
+
+            if not output_texture:
+                output_model = texture
+
             # Anpassung des Wertes für 'output_model'
             if texture:
                 texture = "sodium/assets/" + texture.replace(":", "/textures/")+".png"
