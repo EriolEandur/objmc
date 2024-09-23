@@ -18,6 +18,8 @@ import tkinter.filedialog as tkfd
 # INPUT
 # --------------------------------
 
+Image.MAX_IMAGE_PIXELS = 1000000000        
+
 # objs
 objs = [""]
 # texture animations not supported yet

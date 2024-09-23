@@ -2,19 +2,13 @@ import yaml
 import subprocess
 import os
 import PIL
+import argparse
+from pathlib import Path
+from PIL import Image
 
-changed_files_path = 'changed_files.txt'
-
-print("Generating vanilla files!")
-print(f"Processing changed files from: {changed_files_path}")
-      
-with open(changed_files_path, 'r') as file:
-    lines = file.readlines()
-
-for line in lines:
-    filename = 'sodium/'+line.split('\t')[1].strip()
-
+def work_on_obj_file(filename):
     if filename.endswith('.obj'):
+        print(f"work_on_obj_file: {filename}") 
         meta_filename = filename.replace('.obj', '.objmeta')
 
         if os.path.exists(meta_filename):
@@ -41,30 +35,27 @@ for line in lines:
             output_model = None
             output_texture = None
             
-        print(f"Offset: {offset[0]} {offset[1]} {offset[2]}")
-            
         if not texture:
-            print("Get texture from .mtl file: ",filename.replace('.obj', '.mtl'))
+            printDebug("Get texture from .mtl file: "+filename.replace('.obj', '.mtl'))
             with open(filename.replace('.obj','.mtl'), 'r') as file:
                 for line in file:
-                    print(line)
                     if line.startswith('map_Kd'):
                         texture = line.split()[1].strip()
                         break  
         if texture:
-            texture = "sodium/assets/" + texture.replace(":", "/textures/")+".png"
+            texture = input_path+"/assets/" + texture.replace(":", "/textures/")+".png"
 
         if not output_model:
             output_model = filename.replace('.obj', '.json').replace('sodium/','vanilla/')
-            print("Use default output model: ",output_model)
+            printDebug("Use default output model: "+output_model)
         else:
-            output_model = "vanilla/assets/" + output_model.replace(":", "/models/")+".json"
+            output_model = output_path+"/assets/" + output_model.replace(":", "/models/")+".json"
 
         if not output_texture:
-            output_texture = texture.replace('sodium/', 'vanilla/')
-            print("Use default output texture: ",output_texture)
+            output_texture = texture.replace(output_path+'/', output_path+'/')
+            printDebug("Use default output texture: "+output_texture)
         else:
-            output_texture = "vanilla/assets/" + output_texture.replace(":", "/textures/")+".png"
+            output_texture = output_path+"/assets/" + output_texture.replace(":", "/textures/")+".png"
 
         if texture and output_model and output_texture:
 
@@ -82,7 +73,7 @@ for line in lines:
             if 'flipuv' in options:
                 runList.append('--flipuv')
             
-            print(f"Running process script with {runList}")
+            printDebug("Running process script with "+ str(runList))
 
             try:
                 result = subprocess.run(runList, check=True,
@@ -94,3 +85,45 @@ for line in lines:
                 print("Script error output (stderr):", e.stderr.decode('utf-8') if e.stderr else "No stderr")
         else:
             print(f"Missing one of the required parameters for {filename}")
+
+def printDebug(message):
+    if debug:
+        print(message)
+
+Image.MAX_IMAGE_PIXELS = 1000000000        
+parser = argparse.ArgumentParser(description='Convert OBJ models to vanilla shader models.')
+
+# Kommandozeilenargumente hinzufügen
+parser.add_argument('input_path', help='Path to read OBJ models from') 
+parser.add_argument('output_path', help='Path to write vanilla shader models in.')
+parser.add_argument('--changes', help='Filename read changed files from. Only these files will be considered. Without this argument all files are considerd.', default = None)
+parser.add_argument('--debug', action='store_true', help='Create debug output.')
+
+# Argumente parsen
+args = parser.parse_args()
+
+print(f'Source path: {args.input_path}')
+print(f'Output path: {args.output_path}')
+input_path = args.input_path
+output_path = args.output_path
+debug = args.debug
+
+print("Generating vanilla files!")
+
+if args.changes:
+    changed_files_path = args.changes
+
+    print(f"Processing changed .obj files read from: {changed_files_path}")
+    
+    with open(changed_files_path, 'r') as file:
+        lines = file.readlines()
+
+    for line in lines:
+        work_on_obj_file(input_path+"/"+line.split('\t')[1].strip())
+else:
+    print(f"Processing all .obj files in: {input_path}")
+
+    absolute_input_path = Path.cwd() / input_path
+    for file_path in absolute_input_path.rglob('*'):
+        if file_path.is_file():
+            work_on_obj_file(str(file_path.relative_to(Path.cwd())))
